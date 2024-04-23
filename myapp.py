@@ -61,7 +61,7 @@ def main():
     
     # Add a footer with emojis
     st.write("---")
-    st.write("Created by Abhishek Singh and Adarsh Pathak :man_technologist: :man_technologist:")
+    st.write("Created by Abhishek Singh and Adarsh Pathak ")
 
 if __name__ == '__main__':
     main()
