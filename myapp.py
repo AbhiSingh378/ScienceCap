@@ -1,5 +1,6 @@
 import streamlit as st
 import nltk
+nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 from sklearn.linear_model import LogisticRegression
 import pickle
