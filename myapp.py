@@ -1,5 +1,6 @@
 import streamlit as st
-from sklearn.feature_extraction.text import CountVectorizer
+import nltk
+from nltk.tokenize import word_tokenize
 from sklearn.linear_model import LogisticRegression
 import pickle
 
