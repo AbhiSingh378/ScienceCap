@@ -1,4 +1,41 @@
 import streamlit as st
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def send_email(feedback):
+    # Email configuration
+    sender_email = "your_email@example.com"
+    sender_password = "your_email_password"
+    recipient_email = "Singh.abhishek3@northeastern.edu"
+
+    # Create a multipart message
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = recipient_email
+    message["Subject"] = "Feedback from Emotion Detection App"
+
+    # Add the feedback as the email body
+    body = f"Feedback:\n{feedback}"
+    message.attach(MIMEText(body, "plain"))
+
+    try:
+        # Create a secure SSL/TLS connection
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        
+        # Login to the email account
+        server.login(sender_email, sender_password)
+        
+        # Send the email
+        server.send_message(message)
+        
+        print("Email sent successfully!")
+    except Exception as e:
+        print("An error occurred while sending the email:", str(e))
+    finally:
+        # Close the SMTP connection
+        server.quit()
 
 def app():
     st.title("About Emotion Detection")
@@ -40,7 +77,6 @@ def app():
     
     with st.expander("Prediction on New Text"):
         st.write("To make predictions on new text data, we first preprocess the text using the same steps as before. We then transform the preprocessed text into numerical features using the trained vectorizer. Finally, we pass the features to the trained model to obtain the predicted emotion.")
-
     
     with st.expander("Model Persistence"):
         st.write("We save the trained model and the vectorizer using the `pickle` library. This allows us to load the model and vectorizer later for making predictions without retraining the model.")
@@ -80,6 +116,7 @@ def app():
     feedback = st.text_input("Please provide your feedback or suggestions:")
     if st.button("Submit Feedback"):
         if feedback:
+            send_email(feedback)
             st.success("Thank you for your feedback! We appreciate your input. :pray:")
         else:
             st.warning("Please enter your feedback before submitting. :exclamation:")
